@@ -1,0 +1,228 @@
+
+GPIO.c.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000114  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000168  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000168  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000198  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000068  00000000  00000000  000001d4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000008d7  00000000  00000000  0000023c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000067b  00000000  00000000  00000b13  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000385  00000000  00000000  0000118e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000098  00000000  00000000  00001514  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000036c  00000000  00000000  000015ac  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000250  00000000  00000000  00001918  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000048  00000000  00000000  00001b68  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 6d 00 	call	0xda	; 0xda <main>
+  64:	0c 94 88 00 	jmp	0x110	; 0x110 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <port_dir>:
+}
+
+uint8 port_dir(uint8 base , uint8 state){
+	
+	uint8 check= no_error ;
+	if(state==OUTPUT){
+  6c:	61 30       	cpi	r22, 0x01	; 1
+  6e:	31 f4       	brne	.+12     	; 0x7c <port_dir+0x10>
+		set_port(base+dir_offest);
+  70:	e8 2f       	mov	r30, r24
+  72:	f0 e0       	ldi	r31, 0x00	; 0
+  74:	8f ef       	ldi	r24, 0xFF	; 255
+  76:	81 83       	std	Z+1, r24	; 0x01
+	
+}
+
+uint8 port_dir(uint8 base , uint8 state){
+	
+	uint8 check= no_error ;
+  78:	80 e0       	ldi	r24, 0x00	; 0
+  7a:	08 95       	ret
+	if(state==OUTPUT){
+		set_port(base+dir_offest);
+	}
+	else if(state==INPUT){
+  7c:	61 11       	cpse	r22, r1
+  7e:	05 c0       	rjmp	.+10     	; 0x8a <port_dir+0x1e>
+		clr_port(base+dir_offest);
+  80:	e8 2f       	mov	r30, r24
+  82:	f0 e0       	ldi	r31, 0x00	; 0
+  84:	11 82       	std	Z+1, r1	; 0x01
+	
+}
+
+uint8 port_dir(uint8 base , uint8 state){
+	
+	uint8 check= no_error ;
+  86:	80 e0       	ldi	r24, 0x00	; 0
+  88:	08 95       	ret
+	}
+	else if(state==INPUT){
+		clr_port(base+dir_offest);
+	}
+	else{
+		check=error_happend ;
+  8a:	81 e0       	ldi	r24, 0x01	; 1
+	}
+	return check ;
+	
+	}
+  8c:	08 95       	ret
+
+0000008e <write_pin>:
+
+uint8 write_pin(uint8 pin ,uint8 base ,uint8 val){
+  8e:	98 2f       	mov	r25, r24
+	
+	uint8 check =no_error ;
+  90:	81 e0       	ldi	r24, 0x01	; 1
+  92:	98 30       	cpi	r25, 0x08	; 8
+  94:	08 f4       	brcc	.+2      	; 0x98 <write_pin+0xa>
+  96:	80 e0       	ldi	r24, 0x00	; 0
+	if(pin>max_pins){
+		check =error_happend ;
+	}
+	if(val==1){
+  98:	41 30       	cpi	r20, 0x01	; 1
+  9a:	69 f4       	brne	.+26     	; 0xb6 <write_pin+0x28>
+		set_pin(pin,base+port_offest);
+  9c:	e6 2f       	mov	r30, r22
+  9e:	f0 e0       	ldi	r31, 0x00	; 0
+  a0:	42 81       	ldd	r20, Z+2	; 0x02
+  a2:	21 e0       	ldi	r18, 0x01	; 1
+  a4:	30 e0       	ldi	r19, 0x00	; 0
+  a6:	02 c0       	rjmp	.+4      	; 0xac <write_pin+0x1e>
+  a8:	22 0f       	add	r18, r18
+  aa:	33 1f       	adc	r19, r19
+  ac:	9a 95       	dec	r25
+  ae:	e2 f7       	brpl	.-8      	; 0xa8 <write_pin+0x1a>
+  b0:	24 2b       	or	r18, r20
+  b2:	22 83       	std	Z+2, r18	; 0x02
+  b4:	08 95       	ret
+	}
+	else if(val==0){
+  b6:	41 11       	cpse	r20, r1
+  b8:	0e c0       	rjmp	.+28     	; 0xd6 <write_pin+0x48>
+		clr_pin(pin,base+port_offest);
+  ba:	e6 2f       	mov	r30, r22
+  bc:	f0 e0       	ldi	r31, 0x00	; 0
+  be:	42 81       	ldd	r20, Z+2	; 0x02
+  c0:	21 e0       	ldi	r18, 0x01	; 1
+  c2:	30 e0       	ldi	r19, 0x00	; 0
+  c4:	02 c0       	rjmp	.+4      	; 0xca <write_pin+0x3c>
+  c6:	22 0f       	add	r18, r18
+  c8:	33 1f       	adc	r19, r19
+  ca:	9a 95       	dec	r25
+  cc:	e2 f7       	brpl	.-8      	; 0xc6 <write_pin+0x38>
+  ce:	20 95       	com	r18
+  d0:	24 23       	and	r18, r20
+  d2:	22 83       	std	Z+2, r18	; 0x02
+  d4:	08 95       	ret
+	}
+	else{
+		check=error_happend ;
+  d6:	81 e0       	ldi	r24, 0x01	; 1
+	}
+	
+	return check ;
+}
+  d8:	08 95       	ret
+
+000000da <main>:
+#include <util/delay.h>
+#include "gpio.h"
+
+int main(void)
+{
+    port_dir(BASE_A,1);
+  da:	61 e0       	ldi	r22, 0x01	; 1
+  dc:	89 e3       	ldi	r24, 0x39	; 57
+  de:	0e 94 36 00 	call	0x6c	; 0x6c <port_dir>
+    while (1) 
+    {
+		write_pin(1,BASE_A,1);
+  e2:	41 e0       	ldi	r20, 0x01	; 1
+  e4:	69 e3       	ldi	r22, 0x39	; 57
+  e6:	81 e0       	ldi	r24, 0x01	; 1
+  e8:	0e 94 47 00 	call	0x8e	; 0x8e <write_pin>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  ec:	87 ea       	ldi	r24, 0xA7	; 167
+  ee:	91 e6       	ldi	r25, 0x61	; 97
+  f0:	01 97       	sbiw	r24, 0x01	; 1
+  f2:	f1 f7       	brne	.-4      	; 0xf0 <main+0x16>
+  f4:	00 c0       	rjmp	.+0      	; 0xf6 <main+0x1c>
+  f6:	00 00       	nop
+		_delay_ms(100);
+		write_pin(1,BASE_A,0) ;
+  f8:	40 e0       	ldi	r20, 0x00	; 0
+  fa:	69 e3       	ldi	r22, 0x39	; 57
+  fc:	81 e0       	ldi	r24, 0x01	; 1
+  fe:	0e 94 47 00 	call	0x8e	; 0x8e <write_pin>
+ 102:	87 ea       	ldi	r24, 0xA7	; 167
+ 104:	91 e6       	ldi	r25, 0x61	; 97
+ 106:	01 97       	sbiw	r24, 0x01	; 1
+ 108:	f1 f7       	brne	.-4      	; 0x106 <main+0x2c>
+ 10a:	00 c0       	rjmp	.+0      	; 0x10c <main+0x32>
+ 10c:	00 00       	nop
+ 10e:	e9 cf       	rjmp	.-46     	; 0xe2 <main+0x8>
+
+00000110 <_exit>:
+ 110:	f8 94       	cli
+
+00000112 <__stop_program>:
+ 112:	ff cf       	rjmp	.-2      	; 0x112 <__stop_program>
