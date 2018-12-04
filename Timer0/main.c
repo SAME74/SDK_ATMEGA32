@@ -1,7 +1,7 @@
 /*
  * Timer.c.c
  *
- * Created: 12/3/2018 3:03:27 PM
+ * Created: 
  * Author : Sameh Farouk
  */ 
 #include <avr/io.h>
@@ -14,6 +14,8 @@ int main(void)
 {
 	DDRB=0xff; //Flashing LED
 TIMER_INTERRUPT_CHECK f;
+f.INTERRUPT_ENABLE=OVERVLOW_INTERRUPT;
+f.fun_ptr=&fun;
 
 	//Setup Timer: use overflow interrupt.
 interrupt_timers(&f);
@@ -24,8 +26,6 @@ TIMER_CONFG s;
 s.TIMER_MODE=NORMAL ;
 s.PRESCALERS=NO_PRESCALER;
 init_timer0(&s);
-f.INTERRUPT_ENABLE=OVERVLOW_INTERRUPT;
-f.fun_ptr=&fun;
 	 // Enable global interrupts??
 	
 	//TCCR1B |= ((1 << CS10) | (1 << CS11)); // Set up timer at Fcpu/64 ??
