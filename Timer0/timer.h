@@ -49,8 +49,11 @@ typedef struct{
 	
 	
 
-void init_timer0(uint8 val,TIMER_CONFG *obj) ;
+void init_timer0(TIMER_CONFG *obj) ;
 void interrupt_timers(TIMER_INTERRUPT_CHECK *j);
+void write_to_count_reg(uint8 val);
+void write_to_capture_reg(uint8 val);
+
 
 
 

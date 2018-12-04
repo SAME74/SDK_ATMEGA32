@@ -11,18 +11,16 @@
 void (*interrupt_overflow)(void) ;
 void (*inrterrupt_output_capture)(void);
 
-void init_timer0(uint8 val, TIMER_CONFG *obj){
+void init_timer0(TIMER_CONFG *obj){
 	
 	if(obj->TIMER_MODE==NORMAL){
 		clr_pin(3,BASE_TIMER_0+time_control_0);
 		clr_pin(6,BASE_TIMER_0+time_control_0);
-		hw_wr_port(BASE_TIMER_0+time_counter_0,val);
 	}
 	else if(obj->TIMER_MODE==CTC){
 		set_pin(3,BASE_TIMER_0+time_control_0);
 		clr_pin(6,BASE_TIMER_0+time_control_0);
-		clr_port(BASE_TIMER_0+time_counter_0);
-		hw_wr_port(BASE_TIMER_0+time_output_capture_0,val);
+		
 	}
 	
 	else if(obj->TIMER_MODE==PWM){
@@ -93,6 +91,16 @@ void init_timer0(uint8 val, TIMER_CONFG *obj){
 							
 }
 
+
+void write_to_count_reg(uint8 val){
+	hw_wr_port(BASE_TIMER_0+time_counter_0,val);
+}
+
+void write_to_capture_reg(uint8 val){
+	
+	hw_wr_port(BASE_TIMER_0+time_output_capture_0,val);
+}
+
 void interrupt_timers(TIMER_INTERRUPT_CHECK *j){
 	if (j->INTERRUPT_ENABLE==OVERVLOW_INTERRUPT)
 	{
@@ -113,6 +121,7 @@ ISR(TIMER0_OVF_vect){
 	(*interrupt_overflow)();
 	
 }
+
 
 ISR(TIMER0_COMP_vect){
 	
