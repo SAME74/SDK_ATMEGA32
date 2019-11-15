@@ -12,6 +12,7 @@
 
 #define MAX 150
 #define MIN 0
+#define null ((void *)0)
 int main(void)
 {
     port_dir(BASE_A,1);
