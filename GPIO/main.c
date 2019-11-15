@@ -9,8 +9,9 @@
 #include <util/delay.h>
 #include "gpio.h"
 
-#define MAX 150
 
+#define MAX 150
+#define MIN 0
 int main(void)
 {
     port_dir(BASE_A,1);
