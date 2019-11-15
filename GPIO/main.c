@@ -9,6 +9,7 @@
 #include <util/delay.h>
 #include "gpio.h"
 
+#define MIN 0
 int main(void)
 {
     port_dir(BASE_A,1);
