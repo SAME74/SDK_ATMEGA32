@@ -9,7 +9,7 @@
 #include <util/delay.h>
 #include "gpio.h"
 
-#define MAX 100
+#define MAX 150
 
 int main(void)
 {
